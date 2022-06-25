@@ -12,7 +12,9 @@ import net.runelite.client.plugins.PluginDescriptor;
 
 @Slf4j
 @PluginDescriptor(
-	name = "No Flashing Chat Categories"
+	name = "No Blue Chat",
+	description = "Prevents chat categories from turning blue",
+	tags = {"ui", "chat"}
 )
 public class NoBlueChatPlugin extends Plugin
 {
@@ -25,35 +27,44 @@ public class NoBlueChatPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("Example started!");
+		log.info("No Blue Chat started!");
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.info("Example stopped!");
+		log.info("No Blue Chat stopped!");
 	}
-
-//	@Subscribe
-//	public void onGameStateChanged(GameStateChanged gameStateChanged)
-//	{
-//		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
-//		{
-//		}
-//	}
 
 	@Subscribe
 	public void onScriptPreFired(ScriptPreFired event)
 	{
-		if(event.getScriptId() == 179)
+		if (event.getScriptId() == 179)
 		{
-			client.getVarcMap().put( (Integer) 44, 0);
-			client.getVarcMap().put( (Integer) 45, 0);
-			client.getVarcMap().put( (Integer) 46, 0);
-			client.getVarcMap().put( (Integer) 47, 0);
-			client.getVarcMap().put( (Integer) 48, 0);
-			client.getVarcMap().put( (Integer) 438, 0);
-			client.getVarcMap().put( (Integer) 44, 0);
+			if (config.gameChat())
+			{
+				client.setVarcIntValue(44, 0);
+			}
+			if (config.publicChat())
+			{
+				client.setVarcIntValue(45, 0);
+			}
+			if (config.privateChat())
+			{
+				client.setVarcIntValue(46, 0);
+			}
+			if (config.clanChat())
+			{
+				client.setVarcIntValue(47, 0);
+			}
+			if (config.tradeChat())
+			{
+				client.setVarcIntValue(48, 0);
+			}
+			if (config.channelChat())
+			{
+				client.setVarcIntValue(438, 0);
+			}
 		}
 	}
 
